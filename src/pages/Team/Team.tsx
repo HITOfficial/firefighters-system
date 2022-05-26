@@ -19,6 +19,38 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 
+import { DataGrid, GridColumns, GridRowsProp } from "@mui/x-data-grid";
+
+const columns: GridColumns = [
+  { field: "id", headerName: "ID", width: 180 },
+  { field: "fullName", headerName: "Full Name", width: 180 },
+  { field: "age", headerName: "Age", width: 180 },
+  { field: "location", headerName: "Location", width: 180 },
+  { field: "phone", headerName: "Phone", width: 180 },
+  { field: "sex", headerName: "Sex", width: 180 },
+  { field: "rank", headerName: "Rank", width: 180 },
+  { field: "equipment", headerName: "Equipment", width: 180 },
+  { field: "drivingLicence", headerName: "Driving Licence", width: 180 },
+  { field: "healthInsurance", headerName: "Health Insurance", width: 180 },
+  { field: "additionalInfo", headerName: "Additional Info", width: 180 },
+];
+
+const rowsS: GridRowsProp = [
+  {
+    id: "121323312",
+    fullName: "Jack Brown",
+    age: 33,
+    location: "willy streeet",
+    phone: "2131 123 123",
+    sex: "male",
+    rank: "firefighter",
+    equipment: "basic equipment",
+    drivingLicence: "B",
+    healthInsurance: "basic",
+    additionalInfo: "some extra info",
+  },
+];
+
 interface Data {
   age: number;
   joined: string;
@@ -186,32 +218,39 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     };
 
   return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox"></TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={"center"}
-            padding={headCell.disablePadding ? "none" : "normal"}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : "asc"}
-              onClick={createSortHandler(headCell.id)}
+    <>
+      <TableHead>
+        <TableRow>
+          <TableCell padding="checkbox"></TableCell>
+          {headCells.map((headCell) => (
+            <TableCell
+              key={headCell.id}
+              align={"center"}
+              padding={headCell.disablePadding ? "none" : "normal"}
+              sortDirection={orderBy === headCell.id ? order : false}
             >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === "desc" ? "sorted descending" : "sorted ascending"}
-                </Box>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : "asc"}
+                onClick={createSortHandler(headCell.id)}
+              >
+                {headCell.label}
+                {orderBy === headCell.id ? (
+                  <Box component="span" sx={visuallyHidden}>
+                    {order === "desc"
+                      ? "sorted descending"
+                      : "sorted ascending"}
+                  </Box>
+                ) : null}
+              </TableSortLabel>
+            </TableCell>
+          ))}
+        </TableRow>
+      </TableHead>
+      <Box sx={{ height: 400, width: "600px" }}>
+        <DataGrid rows={rowsS} columns={columns} />
+      </Box>
+    </>
   );
 }
 
@@ -223,38 +262,15 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
   const { numSelected } = props;
 
   return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
-          bgcolor: (theme) =>
-            alpha(
-              theme.palette.primary.main,
-              theme.palette.action.activatedOpacity
-            ),
-        }),
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          color="inherit"
-          variant="subtitle1"
-          component="div"
-        >
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
-          Firefighters List
-        </Typography>
-      )}
+    <Toolbar>
+      <Typography
+        sx={{ flex: "1 1 100%" }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
+      >
+        Firefighters List
+      </Typography>
     </Toolbar>
   );
 };
@@ -346,6 +362,7 @@ export default function Team() {
 
                   return (
                     <TableRow
+                      sx={{ cursor: "pointer" }}
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       role="checkbox"

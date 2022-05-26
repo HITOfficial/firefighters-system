@@ -4,6 +4,7 @@ import { Box, ThemeProvider } from "@mui/material";
 import Layout from "./components/Layout/Layout";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Team from "./pages/Team/Team";
+import TeamUserDescription from "./pages/Team/TeamUserDescription/TeamUserDescription";
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
         <Layout></Layout>
         <Box sx={{ paddingLeft: "16rem", paddingTop: "4rem" }}>
           <Routes>
-            <Route path="" />
+            <Route path="" element={<TeamUserDescription />} />
             <Route path="team" element={<Team />} />
+            <Route path="team/:id" element={<TeamUserDescription />} />
           </Routes>
         </Box>
       </BrowserRouter>

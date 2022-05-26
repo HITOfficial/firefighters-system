@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Box,
   FormControl,
   MenuItem,
@@ -7,7 +8,6 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
-import { UserBox, UserAvatar } from "./UserFormControl.style";
 import { ReactComponent as DefaultAvatar } from "../../../../images/icons/default_avatar.svg";
 
 const AvatarBox = styled(Box)({
@@ -20,6 +20,17 @@ const SelectStyle = {
     color: "white",
   },
 };
+
+export const UserBox = styled(Box)({
+  width: 150,
+  display: "flex",
+  alignItems: "center",
+});
+export const UserAvatar = styled(Avatar)({
+  marginRight: "1rem",
+  width: "1.5rem",
+  height: "1.5rem",
+});
 
 const UserFormControl = (): JSX.Element => {
   const [user, setUser] = useState("User1");
