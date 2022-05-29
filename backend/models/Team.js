@@ -1,46 +1,45 @@
 const mongoose = require("mongoose");
 
-
-TeamSchema = new mongoose.Schema({
+TeamMemberSchema = new mongoose.Schema(
+  {
     fullName: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     age: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     location: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     phone: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     sex: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     rank: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     equipment: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     drivingLicence: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     healthInsurance: {
-        type: String,
-        required: true
-    },healthInsurance: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-}, {versionKey: false});
+  },
+  { versionKey: false }
+);
 
-module.exports =  mongoose.model("Team", TeamSchema);
+module.exports = mongoose.model("TeamMember", TeamMemberSchema);

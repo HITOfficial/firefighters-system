@@ -1,10 +1,10 @@
 const express = require("express");
-const User = require("../models/Team");
+const Team = require("../models/Team");
 const router = express.Router();
 
-router.get("/users", async (req, res) => {
-  const users = await User.find();
-  res.send(users);
+router.get("/team-members", async (req, res) => {
+  const Teams = await Team.find();
+  res.send(Teams);
 });
 
 module.exports = router;
