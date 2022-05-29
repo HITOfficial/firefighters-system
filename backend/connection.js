@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { Room } = require("./models/Room");
 const routes = require("./routes/routes");
 const express = require("express");
 // mongoDB connection
