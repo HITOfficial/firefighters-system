@@ -6,6 +6,9 @@ const cors = require("cors");
 const route = require("./routes/routes");
 
 app.use(cors());
+
+// body parser to have not undefined in routes post
+app.use(express.json());
 app.use(route);
 
 //MongoDB
@@ -39,14 +42,14 @@ server.listen(3001, () => {
 // new user
 
 // const member = new TeamMembers({
-//   fullName: "name1",
-//   age: "46",
-//   location: "Location1",
+//   fullName: "name2",
+//   age: "61",
+//   location: "Location2",
 //   phone: "+48 1212412 4",
-//   sex: "male",
-//   rank: "rank1",
-//   equipment: "eq1",
-//   drivingLicence: "B",
+//   sex: "female",
+//   rank: "rank2",
+//   equipment: "eq2",
+//   drivingLicence: "None",
 //   healthInsurance: "None",
 // });
 // //

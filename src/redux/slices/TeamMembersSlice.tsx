@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const POST_URL = "http://localhost:3001/team-members";
 
@@ -31,19 +32,34 @@ export const addTeamMember = createAsyncThunk(
   "teamMembers/addTeamMember",
   async (teamMember: TeamMember, { rejectWithValue }) => {
     try {
-      const response = await fetch("http://localhost:3001/team-members", {
-        method: "POST",
-        body: JSON.stringify(teamMember),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      return data;
-    } catch (err) {
-      return rejectWithValue("Cannot post data");
+      console.log(teamMember);
+      const response = await axios.post(POST_URL + "/post", teamMember);
+      return response.data
+    } catch(error) {
+      console.log("POST new team memeber ERROR:", error);
+      return  rejectWithValue(error);
     }
   }
+);
+
+interface props {
+  _id: string,
+  field: string,
+  value : string | number
+}
+
+export const updateTeamMember = createAsyncThunk(
+    "teamMembers/updateTeamMember",
+    async ({_id, field, value}: props, { rejectWithValue }) => {
+      try {
+        console.log(_id, field, value);
+        const response = await axios.post(POST_URL + "/post", {_id, field, value});
+        return response.data
+      } catch(error) {
+        console.log("POST update team memeber ERROR:", error);
+        return  rejectWithValue(error);
+      }
+    }
 );
 
 const teamMembersSlice = createSlice({
@@ -61,16 +77,15 @@ const teamMembersSlice = createSlice({
     builder.addCase(fetchTeamMembers.rejected, (state, action) => {
       state.status = "failed";
     });
-    builder.addCase(addTeamMember.pending, (state, action) => {
-      state.status = "loading";
-    });
     builder.addCase(addTeamMember.fulfilled, (state, action) => {
-      state.teamMembers = action.payload;
-      state.status = "successed";
+      // state.teamMembers = action.payload;
+      state.status = "loading";
+      console.log("POST NEW MAN")
     });
-    builder.addCase(addTeamMember.rejected, (state, action) => {
-      state.status = "failed";
-      console.log("fail with post new team member: ", action.payload);
+    builder.addCase(updateTeamMember.fulfilled, (state, action) => {
+      // state.teamMembers = action.payload;
+      state.status = "loading";
+      console.log("POST UPDATE MAN")
     });
   },
 });
