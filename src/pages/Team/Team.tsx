@@ -9,13 +9,18 @@ import {
   GridRowsProp,
   GridCellEditStopParams,
   GridCellEditStopReasons,
-  MuiEvent, GridCellEditCommitParams, GridCallbackDetails,
+  MuiEvent,
+  GridCellEditCommitParams,
+  GridCallbackDetails,
+  GridRowId,
+  GridCellMode,
+  GridEditRowsModel,
 } from "@mui/x-data-grid";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   addTeamMember,
   fetchTeamMembers,
-  TeamMember, updateTeamMember,
+  updateTeamMember,
 } from "../../redux/slices/TeamMembersSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -78,35 +83,32 @@ export default function Team() {
     }
   }, []);
 
-  useEffect( () => {
-    console.log(teamMembers)
-  },[teamMembers])
-
-  const handleRowEditCommit = React.useCallback(
-      (params:GridCellEditStopParams) => {
-        const id = params.id;
-        const key = params.field;
-        const value = params.value;
-        console.log(id,key,value)
-        },
-      []
-  );
-
-  const onCellEditCommit= (props:GridCellEditStopParams) => {
-    console.log(props)
-  }
+  useEffect(() => {
+    console.log(teamMembers);
+  }, [teamMembers]);
 
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", padding: 2 }}>
         <div onClick={() => dispatch(addTeamMember(rows[0]))}> HEHER </div>
+        <div> {JSON.stringify(rows)} </div>
         <Box sx={{ height: 400, display: "flex" }}>
           {teamMembers.status === "successed" ? (
-            <DataGrid getRowId={(row) => row._id}
+            <DataGrid
+              getRowId={(row) => row._id}
               rows={teamMembers.teamMembers}
               columns={columns}
               // checkboxSelection
-              experimentalFeatures={{ newEditingApi: true }}
+              onCellEditCommit={(params) => {
+                console.log("XXX");
+                dispatch(
+                  updateTeamMember({
+                    id: params.id.toString(),
+                    field: params.field,
+                    value: params.value,
+                  })
+                );
+              }}
             />
           ) : (
             teamMembers.status

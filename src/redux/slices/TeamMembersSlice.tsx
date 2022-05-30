@@ -16,6 +16,12 @@ export interface TeamMember {
   healthInsurance: string;
 }
 
+export interface updateTeamMemberProps {
+  id: string;
+  field: string;
+  value: string;
+}
+
 const initialState: {
   teamMembers: TeamMember[];
   status: "idle" | "loading" | "successed" | "failed";
@@ -34,32 +40,28 @@ export const addTeamMember = createAsyncThunk(
     try {
       console.log(teamMember);
       const response = await axios.post(POST_URL + "/post", teamMember);
-      return response.data
-    } catch(error) {
+      return response.data;
+    } catch (error) {
       console.log("POST new team memeber ERROR:", error);
-      return  rejectWithValue(error);
+      return rejectWithValue(error);
     }
   }
 );
 
-interface props {
-  _id: string,
-  field: string,
-  value : string | number
-}
-
 export const updateTeamMember = createAsyncThunk(
-    "teamMembers/updateTeamMember",
-    async ({_id, field, value}: props, { rejectWithValue }) => {
-      try {
-        console.log(_id, field, value);
-        const response = await axios.post(POST_URL + "/post", {_id, field, value});
-        return response.data
-      } catch(error) {
-        console.log("POST update team memeber ERROR:", error);
-        return  rejectWithValue(error);
-      }
+  "teamMembers/updateTeamMember",
+  async ({ id, field, value }: updateTeamMemberProps, { rejectWithValue }) => {
+    try {
+      console.log("SLICE DATA", id, field, value);
+      const updateData = { _id: id, field: field, value: value };
+      console.log("UPDATE DATA TO BACKEND: ", updateData);
+      const response = await axios.post(POST_URL + "/update", updateData);
+      return response.data;
+    } catch (error) {
+      console.log("POST update team memeber ERROR:", error);
+      return rejectWithValue(error);
     }
+  }
 );
 
 const teamMembersSlice = createSlice({
@@ -80,12 +82,12 @@ const teamMembersSlice = createSlice({
     builder.addCase(addTeamMember.fulfilled, (state, action) => {
       // state.teamMembers = action.payload;
       state.status = "loading";
-      console.log("POST NEW MAN")
+      console.log("POST NEW MAN");
     });
     builder.addCase(updateTeamMember.fulfilled, (state, action) => {
       // state.teamMembers = action.payload;
       state.status = "loading";
-      console.log("POST UPDATE MAN")
+      console.log("POST UPDATE MAN");
     });
   },
 });
