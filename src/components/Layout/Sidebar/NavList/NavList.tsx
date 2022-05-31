@@ -8,7 +8,9 @@ import {
   styled,
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
-import { ReactComponent as TeamIcon } from "../../../../images/icons/team.svg";
+import { ReactComponent as TeamIcon } from "../../../../images/icons/team_members.svg";
+import { ReactComponent as AddTeamMemberIcon } from "../../../../images/icons/add_team_member.svg";
+
 import { ReactComponent as LockIcon } from "../../../../images/icons/lock.svg";
 import { ReactComponent as TournamentsIcon } from "../../../../images/icons/tournaments.svg";
 
@@ -68,13 +70,27 @@ const NavList = () => (
   <NavListBox>
     <List
       component="nav"
-      subheader={<CustomListSubheader>Our Team</CustomListSubheader>}
+      subheader={<CustomListSubheader>Our TeamMembers</CustomListSubheader>}
     >
-      <ListItemButton component={NavLink} to="team" sx={ActiveStyle}>
+      <ListItemButton
+        component={NavLink}
+        to="team-members/list"
+        sx={ActiveStyle}
+      >
         <ListItemIcon>
           <TeamIcon width="20px" />
         </ListItemIcon>
-        <ListItemText primary="Team" />
+        <ListItemText primary="Team Members" />
+      </ListItemButton>
+      <ListItemButton
+        component={NavLink}
+        to="team-members/add"
+        sx={ActiveStyle}
+      >
+        <ListItemIcon>
+          <AddTeamMemberIcon width="20px" />
+        </ListItemIcon>
+        <ListItemText primary="New Team Member" />
       </ListItemButton>
     </List>
     <List

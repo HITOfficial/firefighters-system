@@ -36,8 +36,9 @@ router.post("/team-members/update", async (req, res) => {
   );
 });
 
-router.get("/team-members/post", (req, res) => {
-  res.send("POST new user");
+router.post("/team-members/delete", async (req, res) => {
+  console.log("GOT NEW Delete POST with body:", req.body);
+  await TeamMember.deleteMany({ _id: { $in: req.body } });
 });
 
 module.exports = router;

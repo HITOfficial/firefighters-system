@@ -1,6 +1,13 @@
-import { Box, Grid, MenuItem, styled, TextField } from "@mui/material";
+import { Box, Button, Grid, MenuItem, styled, TextField } from "@mui/material";
 import { ReactComponent as DefaultAvatar } from "../../../images/icons/default_avatar.svg";
 import { ChangeEvent, useState } from "react";
+import {
+  addTeamMember,
+  fetchTeamMembers,
+  TeamMember,
+} from "../../../redux/slices/TeamMembersSlice";
+import { AppDispatch } from "../../../redux/store";
+import { useDispatch } from "react-redux";
 
 const TeamUserContainer = styled(Box)({
   paddingTop: "5rem",
@@ -71,31 +78,45 @@ const gridStyle = {
   justifyContent: "center",
 };
 
-function TeamUserDescription(): JSX.Element {
+function AddTeamMember(): JSX.Element {
+  const dispatch: AppDispatch = useDispatch();
+  const [fullName, setFullName] = useState("John Snow");
+  const [age, setAge] = useState("24");
+  const [location, setLocation] = useState("Location 1");
+  const [phone, setPhone] = useState("(+48) 18 24 18 111");
+  const [additionalInfo, setAdditionalInfo] = useState("Additional Info");
+
   const [sex, setSex] = useState("man");
   const [rank, setRank] = useState("firefighter");
   const [equipment, setEquipment] = useState("basic equipment");
   const [drivingLicence, setDrivingLicence] = useState("B");
   const [healthInsurance, setHealthInsurance] = useState("basic");
-  const [additionalInfo, setAdditionalInfo] = useState("Additional Info");
 
-  const handleSex = (event: ChangeEvent<HTMLInputElement>) => {
-    setSex(event.target.value);
+  // One function as handle changes with ref to react setter
+  const handleChanges = (
+    event: ChangeEvent<HTMLInputElement>,
+    Func_ref: (x: string) => void
+  ) => {
+    Func_ref(event.target.value);
   };
-  const handleRank = (event: ChangeEvent<HTMLInputElement>) => {
-    setRank(event.target.value);
-  };
-  const handleEuipment = (event: ChangeEvent<HTMLInputElement>) => {
-    setEquipment(event.target.value);
-  };
-  const handleDrivingLicence = (event: ChangeEvent<HTMLInputElement>) => {
-    setDrivingLicence(event.target.value);
-  };
-  const handleHealthInsurance = (event: ChangeEvent<HTMLInputElement>) => {
-    setHealthInsurance(event.target.value);
-  };
-  const handleAdditionalInfo = (event: ChangeEvent<HTMLInputElement>) => {
-    setAdditionalInfo(event.target.value);
+
+  const addTeamMemberHandler = () => {
+    const newUser: TeamMember = {
+      _id: "not",
+      fullName: fullName,
+      age: parseInt(age),
+      location: location,
+      phone: phone,
+      sex: sex,
+      additionalInfo: additionalInfo,
+      rank: rank,
+      equipment: equipment,
+      drivingLicence: drivingLicence,
+      healthInsurance: healthInsurance,
+    };
+    dispatch(addTeamMember(newUser));
+    // dont know how to refetch on use effect, from this reason setTimeout
+    setTimeout(() => dispatch(fetchTeamMembers()), 100);
   };
 
   return (
@@ -104,7 +125,6 @@ function TeamUserDescription(): JSX.Element {
         <BoxAvatar>
           <DefaultAvatar />
         </BoxAvatar>
-
         <TextFieldBox>
           <Grid
             container
@@ -112,16 +132,44 @@ function TeamUserDescription(): JSX.Element {
             sx={{ width: "100%", minWidth: "500px", maxWidth: "700px" }}
           >
             <Grid item xs={12} sx={gridStyle}>
-              <TextField label="Full Name" variant="filled" value="John Snow" />
+              <TextField
+                label="Full Name"
+                variant="filled"
+                value={fullName}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setFullName)
+                }
+              />
             </Grid>
             <Grid item xs={12} md={6} lg={4} sx={gridStyle}>
-              <TextField label="Age" variant="filled" value="56" />
+              <TextField
+                label="Age"
+                variant="filled"
+                value={age}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setAge)
+                }
+              />
             </Grid>
             <Grid item xs={12} md={6} lg={4} sx={gridStyle}>
-              <TextField label="Location" variant="filled" value="Location 1" />
+              <TextField
+                label="Location"
+                variant="filled"
+                value={location}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setLocation)
+                }
+              />
             </Grid>
             <Grid item xs={12} md={6} lg={4} sx={gridStyle}>
-              <TextField label="Phone" variant="filled" value="Phone" />
+              <TextField
+                label="Phone"
+                variant="filled"
+                value={phone}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setPhone)
+                }
+              />
             </Grid>
             <Grid item xs={12} md={6} lg={4} sx={gridStyle}>
               <TextField
@@ -130,7 +178,9 @@ function TeamUserDescription(): JSX.Element {
                 select
                 label="Sex"
                 value={sex}
-                onChange={handleSex}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setSex)
+                }
                 variant="filled"
               >
                 {sexTypes.map((option) => (
@@ -147,7 +197,9 @@ function TeamUserDescription(): JSX.Element {
                 select
                 label="Rank"
                 value={rank}
-                onChange={handleRank}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setRank)
+                }
                 variant="filled"
               >
                 {rankTypes.map((option) => (
@@ -165,7 +217,9 @@ function TeamUserDescription(): JSX.Element {
                 select
                 label="Equipment"
                 value={equipment}
-                onChange={handleEuipment}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setEquipment)
+                }
                 variant="filled"
               >
                 {eqiupmentTypes.map((option) => (
@@ -182,7 +236,9 @@ function TeamUserDescription(): JSX.Element {
                 select
                 label="Driving Licence"
                 value={drivingLicence}
-                onChange={handleDrivingLicence}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setDrivingLicence)
+                }
                 variant="filled"
               >
                 {drivingLicenceTypes.map((option) => (
@@ -199,7 +255,9 @@ function TeamUserDescription(): JSX.Element {
                 select
                 label="Health Insurance"
                 value={healthInsurance}
-                onChange={handleHealthInsurance}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setHealthInsurance)
+                }
                 variant="filled"
               >
                 {healthInsuranceTypes.map((option) => (
@@ -217,16 +275,23 @@ function TeamUserDescription(): JSX.Element {
                 multiline
                 maxRows={4}
                 value={additionalInfo}
-                onChange={handleAdditionalInfo}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleChanges(event, setAdditionalInfo)
+                }
                 variant="filled"
               />
             </Grid>
           </Grid>
         </TextFieldBox>
         <TextFieldBox></TextFieldBox>
+        <Box sx={{ padding: "1rem" }}>
+          <Button variant="contained" onClick={addTeamMemberHandler}>
+            Add User
+          </Button>
+        </Box>
       </TeamUserBox>
     </TeamUserContainer>
   );
 }
 
-export default TeamUserDescription;
+export default AddTeamMember;

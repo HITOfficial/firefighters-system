@@ -5,24 +5,18 @@ import { AppDispatch, RootState } from "../../redux/store";
 
 import {
   DataGrid,
-  GridColumns,
-  GridRowsProp,
-  GridCellEditStopParams,
-  GridCellEditStopReasons,
-  MuiEvent,
   GridCellEditCommitParams,
-  GridCallbackDetails,
-  GridRowId,
-  GridCellMode,
-  GridEditRowsModel,
+  GridColumns,
+  GridSelectionModel,
 } from "@mui/x-data-grid";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  addTeamMember,
+  deleteTeamMembers,
   fetchTeamMembers,
   updateTeamMember,
 } from "../../redux/slices/TeamMembersSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 const columns: GridColumns = [
   { field: "_id", headerName: "ID", width: 180 },
@@ -53,29 +47,28 @@ const columns: GridColumns = [
   },
 ];
 
-const rows: GridRowsProp = [
-  {
-    _id: "121323312",
-    fullName: "Jack Brown",
-    age: 33,
-    location: "willy streeet",
-    phone: "2131 123 123",
-    sex: "male",
-    rank: "firefighter",
-    equipment: "basic equipment",
-    drivingLicence: "B",
-    healthInsurance: "basic",
-    additionalInfo: "some extra info",
-  },
-];
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
-
-export default function Team() {
+export default function TeamMembers() {
   const dispatch: AppDispatch = useDispatch();
   const teamMembers = useSelector((state: RootState) => state.teamMembers);
+  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
+
+  const cellEditCommitHandler = (params: GridCellEditCommitParams) => {
+    dispatch(
+      updateTeamMember({
+        id: params.id.toString(),
+        field: params.field,
+        value: params.value,
+      })
+    );
+    // dont know how to refetch on use effect, from this reason setTimeout
+    setTimeout(() => dispatch(fetchTeamMembers()), 100);
+  };
+
+  const removeTeamMembersHandler = () => {
+    dispatch(deleteTeamMembers(selectionModel as string[]));
+    // dont know how to refetch on use effect, from this reason setTimeout
+    setTimeout(() => dispatch(fetchTeamMembers()), 100);
+  };
 
   useEffect(() => {
     if (teamMembers.status === "idle") {
@@ -83,35 +76,36 @@ export default function Team() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log(teamMembers);
-  }, [teamMembers]);
-
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", padding: 2 }}>
-        <div onClick={() => dispatch(addTeamMember(rows[0]))}> HEHER </div>
-        <div> {JSON.stringify(rows)} </div>
-        <Box sx={{ height: 400, display: "flex" }}>
+      <Paper
+        sx={{
+          width: "100%",
+        }}
+      >
+        <Box sx={{ height: 850 }}>
           {teamMembers.status === "successed" ? (
             <DataGrid
+              sx={{ display: "flex" }}
               getRowId={(row) => row._id}
               rows={teamMembers.teamMembers}
               columns={columns}
-              // checkboxSelection
-              onCellEditCommit={(params) => {
-                console.log("XXX");
-                dispatch(
-                  updateTeamMember({
-                    id: params.id.toString(),
-                    field: params.field,
-                    value: params.value,
-                  })
-                );
-              }}
+              checkboxSelection
+              // selection on only checkbox
+              disableSelectionOnClick
+              selectionModel={selectionModel}
+              onSelectionModelChange={setSelectionModel}
+              onCellEditCommit={cellEditCommitHandler}
             />
           ) : (
             teamMembers.status
+          )}
+          {selectionModel.length > 0 && (
+            <Box>
+              <Button variant="contained" onClick={removeTeamMembersHandler}>
+                Remove Members
+              </Button>
+            </Box>
           )}
         </Box>
       </Paper>
