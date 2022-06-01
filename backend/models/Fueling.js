@@ -1,32 +1,36 @@
 const mongoose = require("mongoose");
 
-
 FuelingSchema = new mongoose.Schema(
   {
-      vehicleRegistration: {
+    vehicleRegistration: {
       type: String,
       required: true,
     },
-      date: {
+    fuelType: {
       type: String,
       required: true,
     },
-      liters: {
+    date: {
       type: String,
       required: true,
     },
-      cost: {
+    liters: {
       type: String,
       required: true,
     },
-      sellerDetails: {
+    cost: {
       type: String,
       required: true,
     },
-      buyerDetails: {
+    sellerDetails: {
       type: String,
       required: true,
-    }},
+    },
+    buyerDetails: {
+      type: String,
+      required: true,
+    },
+  },
   { versionKey: false }
 );
 

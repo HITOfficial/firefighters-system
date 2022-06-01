@@ -8,6 +8,7 @@ import AddTeamMember from "./pages/TeamMembers/AddTeamMember/AddTeamMember";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import FuelingsList from "./pages/Fuelings/FuelingsList";
+import AddFueling from "./pages/Fuelings/AddFueling/AddFueling";
 
 function App() {
   return (
@@ -21,8 +22,7 @@ function App() {
               <Route path="team-members/list" element={<TeamMembersList />} />
               <Route path="team-members/add" element={<AddTeamMember />} />
               <Route path="fuelings/list" element={<FuelingsList />} />
-              <Route path="fuelings/add-new" element={<TeamMembersList />} />
-
+              <Route path="fuelings/add-new" element={<AddFueling />} />
             </Routes>
           </Box>
         </BrowserRouter>

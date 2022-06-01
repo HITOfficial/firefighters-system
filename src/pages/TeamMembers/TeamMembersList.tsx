@@ -17,6 +17,7 @@ import {
 } from "../../redux/slices/TeamMembersSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
+import { fetchFuelings } from "../../redux/slices/FuelingsSlice";
 
 const columns: GridColumns = [
   { field: "_id", headerName: "Member ID", width: 180 },
@@ -52,6 +53,10 @@ export default function TeamMembersList() {
   const teamMembers = useSelector((state: RootState) => state.teamMembers);
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
 
+  useEffect(() => {
+    dispatch(fetchTeamMembers());
+  }, [fetchTeamMembers]);
+
   const cellEditCommitHandler = (params: GridCellEditCommitParams) => {
     dispatch(
       updateTeamMember({
@@ -61,13 +66,13 @@ export default function TeamMembersList() {
       })
     );
     // dont know how to refetch on use effect, from this reason setTimeout
-    setTimeout(() => dispatch(fetchTeamMembers()), 100);
+    setTimeout(() => dispatch(fetchTeamMembers()), 500);
   };
 
   const removeTeamMembersHandler = () => {
     dispatch(deleteTeamMembers(selectionModel as string[]));
     // dont know how to refetch on use effect, from this reason setTimeout
-    setTimeout(() => dispatch(fetchTeamMembers()), 100);
+    setTimeout(() => dispatch(fetchTeamMembers()), 500);
   };
 
   useEffect(() => {

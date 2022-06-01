@@ -6,7 +6,7 @@ const POST_URL = "http://localhost:3001/fuelings";
 export interface Fueling {
   _id?: string;
   vehicleRegistration: string;
-  date: number;
+  date?: string;
   fuelType: string;
   liters: string;
   cost: string;

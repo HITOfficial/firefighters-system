@@ -38,6 +38,10 @@ TeamMemberSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    additionalInfo: {
+      type: String,
+      required: true,
+    },
   },
   { versionKey: false }
 );

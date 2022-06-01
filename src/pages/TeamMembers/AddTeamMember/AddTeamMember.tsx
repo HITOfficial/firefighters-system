@@ -1,6 +1,6 @@
 import { Box, Button, Grid, MenuItem, styled, TextField } from "@mui/material";
 import { ReactComponent as DefaultAvatar } from "../../../images/icons/default_avatar.svg";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   addTeamMember,
   fetchTeamMembers,
@@ -8,6 +8,7 @@ import {
 } from "../../../redux/slices/TeamMembersSlice";
 import { AppDispatch } from "../../../redux/store";
 import { useDispatch } from "react-redux";
+import { fetchFuelings } from "../../../redux/slices/FuelingsSlice";
 
 const TeamUserContainer = styled(Box)({
   paddingTop: "5rem",
@@ -116,8 +117,12 @@ function AddTeamMember(): JSX.Element {
     };
     dispatch(addTeamMember(newUser));
     // dont know how to refetch on use effect, from this reason setTimeout
-    setTimeout(() => dispatch(fetchTeamMembers()), 100);
+    setTimeout(() => dispatch(fetchTeamMembers()), 500);
   };
+
+  useEffect(() => {
+    dispatch(fetchTeamMembers());
+  }, [fetchTeamMembers]);
 
   return (
     <TeamUserContainer>
