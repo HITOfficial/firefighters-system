@@ -41,7 +41,7 @@ server.listen(3001, () => {
 
 // new user
 
-// const member = new TeamMembers({
+// const member = new TeamMembersList({
 //   fullName: "name2",
 //   age: "61",
 //   location: "Location2",

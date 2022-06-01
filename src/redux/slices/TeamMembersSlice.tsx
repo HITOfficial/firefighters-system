@@ -39,7 +39,7 @@ export const addTeamMember = createAsyncThunk(
   "teamMembers/addTeamMember",
   async (teamMember: TeamMember, { rejectWithValue }) => {
     try {
-      const response = await axios.post(POST_URL + "/post", teamMember);
+      const response = await axios.post(POST_URL + "/add", teamMember);
       return response.data;
     } catch (error) {
       console.log("POST new team memeber ERROR:", error);

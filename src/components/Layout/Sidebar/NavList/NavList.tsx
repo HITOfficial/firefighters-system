@@ -10,9 +10,9 @@ import {
 import { NavLink } from "react-router-dom";
 import { ReactComponent as TeamIcon } from "../../../../images/icons/team_members.svg";
 import { ReactComponent as AddTeamMemberIcon } from "../../../../images/icons/add_team_member.svg";
-
 import { ReactComponent as LockIcon } from "../../../../images/icons/lock.svg";
-import { ReactComponent as TournamentsIcon } from "../../../../images/icons/tournaments.svg";
+import { ReactComponent as FuelingsIcon } from "../../../../images/icons/fuelings.svg";
+import { ReactComponent as AddIcon } from "../../../../images/icons/add.svg";
 
 const NavListBox = styled(Box)({
   paddingTop: "0.5rem",
@@ -95,13 +95,19 @@ const NavList = () => (
     </List>
     <List
       component="nav"
-      subheader={<CustomListSubheader>Championships</CustomListSubheader>}
+      subheader={<CustomListSubheader>FuelingsList History</CustomListSubheader>}
     >
-      <ListItemButton component={NavLink} to="tournaments" sx={ActiveStyle}>
+      <ListItemButton component={NavLink} to="fuelings/list" sx={ActiveStyle}>
         <ListItemIcon>
-          <TournamentsIcon width="20px" />
+          <FuelingsIcon width="20px" />
         </ListItemIcon>
-        <ListItemText primary="Tournaments" />
+        <ListItemText primary="Check FuelingsList" />
+      </ListItemButton>
+      <ListItemButton component={NavLink} to="fuelings/add-new" sx={ActiveStyle}>
+        <ListItemIcon>
+          <AddIcon width="20px" />
+        </ListItemIcon>
+        <ListItemText primary="New Fueling" />
       </ListItemButton>
     </List>
     <List

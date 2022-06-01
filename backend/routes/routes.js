@@ -2,12 +2,14 @@ const express = require("express");
 const TeamMember = require("../models/TeamMember");
 const router = express.Router();
 
+
+// Team members
 router.get("/team-members", async (req, res) => {
   const teamMembers = await TeamMember.find();
   res.send(teamMembers);
 });
 
-router.post("/team-members/post", (req, res) => {
+router.post("/team-members/add", (req, res) => {
   console.log("GOT NEW POST with body:", req.body);
   const member = new TeamMember({
     fullName: req.body.fullName,
@@ -40,5 +42,8 @@ router.post("/team-members/delete", async (req, res) => {
   console.log("GOT NEW Delete POST with body:", req.body);
   await TeamMember.deleteMany({ _id: { $in: req.body } });
 });
+
+
+
 
 module.exports = router;

@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 
 const columns: GridColumns = [
-  { field: "_id", headerName: "ID", width: 180 },
+  { field: "_id", headerName: "Member ID", width: 180 },
   { field: "fullName", headerName: "Full Name", width: 180, editable: true },
   { field: "age", headerName: "Age", width: 180, editable: true },
   { field: "location", headerName: "Location", width: 180, editable: true },
@@ -47,7 +47,7 @@ const columns: GridColumns = [
   },
 ];
 
-export default function TeamMembers() {
+export default function TeamMembersList() {
   const dispatch: AppDispatch = useDispatch();
   const teamMembers = useSelector((state: RootState) => state.teamMembers);
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>([]);
