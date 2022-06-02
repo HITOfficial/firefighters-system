@@ -13,6 +13,8 @@ import { ReactComponent as AddTeamMemberIcon } from "../../../../images/icons/ad
 import { ReactComponent as LockIcon } from "../../../../images/icons/lock.svg";
 import { ReactComponent as FuelingsIcon } from "../../../../images/icons/fuelings.svg";
 import { ReactComponent as AddIcon } from "../../../../images/icons/add.svg";
+import { ReactComponent as ActionsIcon } from "../../../../images/icons/history.svg";
+
 
 const NavListBox = styled(Box)({
   paddingTop: "0.5rem",
@@ -116,13 +118,13 @@ const NavList = () => (
     >
       <ListItemButton component={NavLink} to="actions/list" sx={ActiveStyle}>
         <ListItemIcon>
-          <LockIcon width="20px" />
+          <ActionsIcon width="20px" />
         </ListItemIcon>
         <ListItemText primary="Check Actions List" />
       </ListItemButton>
       <ListItemButton component={NavLink} to="actions/add-new" sx={ActiveStyle}>
         <ListItemIcon>
-          <LockIcon width="20px" />
+          <AddIcon width="20px" />
         </ListItemIcon>
         <ListItemText primary="New Action" />
       </ListItemButton>

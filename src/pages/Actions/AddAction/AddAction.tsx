@@ -1,5 +1,5 @@
 import { Box, Button, Grid, MenuItem, styled, TextField } from "@mui/material";
-import { ReactComponent as GasStationIcon } from "../../../images/icons/gas_station.svg";
+import { ReactComponent as ActionIcon } from "../../../images/icons/news.svg";
 import { ChangeEvent, useEffect, useState } from "react";
 import { AppDispatch } from "../../../redux/store";
 import { useDispatch } from "react-redux";
@@ -100,7 +100,7 @@ function AddAction(): JSX.Element {
     <ActionContainer>
       <ActionBox>
         <BoxAvatar>
-          <GasStationIcon />
+          <ActionIcon />
         </BoxAvatar>
         <TextFieldBox>
           <Grid
