@@ -95,13 +95,13 @@ const NavList = () => (
     </List>
     <List
       component="nav"
-      subheader={<CustomListSubheader>FuelingsList History</CustomListSubheader>}
+      subheader={<CustomListSubheader>Fuelings List History</CustomListSubheader>}
     >
       <ListItemButton component={NavLink} to="fuelings/list" sx={ActiveStyle}>
         <ListItemIcon>
           <FuelingsIcon width="20px" />
         </ListItemIcon>
-        <ListItemText primary="Check FuelingsList" />
+        <ListItemText primary="Check Fuelings List" />
       </ListItemButton>
       <ListItemButton component={NavLink} to="fuelings/add-new" sx={ActiveStyle}>
         <ListItemIcon>
@@ -112,13 +112,19 @@ const NavList = () => (
     </List>
     <List
       component="nav"
-      subheader={<CustomListSubheader>Accounts</CustomListSubheader>}
+      subheader={<CustomListSubheader>Actions history</CustomListSubheader>}
     >
-      <ListItemButton component={NavLink} to="accounts" sx={ActiveStyle}>
+      <ListItemButton component={NavLink} to="actions/list" sx={ActiveStyle}>
         <ListItemIcon>
           <LockIcon width="20px" />
         </ListItemIcon>
-        <ListItemText primary="See accounts" />
+        <ListItemText primary="Check Actions List" />
+      </ListItemButton>
+      <ListItemButton component={NavLink} to="actions/add-new" sx={ActiveStyle}>
+        <ListItemIcon>
+          <LockIcon width="20px" />
+        </ListItemIcon>
+        <ListItemText primary="New Action" />
       </ListItemButton>
     </List>
   </NavListBox>

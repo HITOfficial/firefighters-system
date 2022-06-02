@@ -1,6 +1,7 @@
 const express = require("express");
 const TeamMember = require("../models/TeamMember");
 const Fueling = require("../models/Fueling");
+const Action = require("../models/Action");
 
 const router = express.Router();
 
@@ -47,8 +48,8 @@ router.post("/team-members/delete", async (req, res) => {
 
 // Fuelings
 router.get("/fuelings", async (req, res) => {
-  const teamMembers = await Fueling.find();
-  res.send(teamMembers);
+  const fuelings = await Fueling.find();
+  res.send(fuelings);
 });
 
 router.post("/fuelings/add", (req, res) => {
@@ -82,5 +83,45 @@ router.post("/fuelings/delete", async (req, res) => {
   console.log("GOT NEW FUELINGS Delete POST with body:", req.body);
   await Fueling.deleteMany({ _id: { $in: req.body } });
 });
+
+// Actions
+router.get("/actions", async (req, res) => {
+  const actions = await Action.find();
+  res.send(actions);
+});
+
+router.post("/actions/add", (req, res) => {
+  console.log("GOT NEW ACTIONS Add POST with body:", req.body);
+  const action = new Action({
+    vehicles: req.body.vehicles,
+    date: req.body.date,
+    distance: req.body.distance,
+    location: req.body.location,
+    equipment: req.body.equipment,
+    type: req.body.type,
+    moves: req.body.moves,
+    participants: req.body.participants,
+  });
+  action.save((err) => console.log(err));
+});
+
+router.post("/actions/update", async (req, res) => {
+  console.log("GOT NEW ACTIONS Update POST with body:", req.body);
+  const { _id, field, value } = req.body;
+  await Action.updateOne(
+      { _id: _id },
+      {
+        $set: {
+          [field]: value,
+        },
+      }
+  );
+});
+
+router.post("/actions/delete", async (req, res) => {
+  console.log("GOT NEW ACTIONS Delete POST with body:", req.body);
+  await Action.deleteMany({ _id: { $in: req.body } });
+});
+
 
 module.exports = router;

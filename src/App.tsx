@@ -9,6 +9,8 @@ import { store } from "./redux/store";
 import { Provider } from "react-redux";
 import FuelingsList from "./pages/Fuelings/FuelingsList";
 import AddFueling from "./pages/Fuelings/AddFueling/AddFueling";
+import ActionsList from "./pages/Actions/ActionsList";
+import AddAction from "./pages/Actions/AddAction/AddAction";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
               <Route path="team-members/add" element={<AddTeamMember />} />
               <Route path="fuelings/list" element={<FuelingsList />} />
               <Route path="fuelings/add-new" element={<AddFueling />} />
+              <Route path="actions/list" element={<ActionsList />} />
+              <Route path="actions/add-new" element={<AddAction/>} />
             </Routes>
           </Box>
         </BrowserRouter>

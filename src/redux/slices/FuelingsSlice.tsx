@@ -34,9 +34,9 @@ export const fetchFuelings = createAsyncThunk(
 
 export const addFueling = createAsyncThunk(
   "fuelings/addFueling",
-  async (teamMember: Fueling, { rejectWithValue }) => {
+  async (fueling: Fueling, { rejectWithValue }) => {
     try {
-      const response = await axios.post(POST_URL + "/add", teamMember);
+      const response = await axios.post(POST_URL + "/add", fueling);
       return response.data;
     } catch (error) {
       console.log("POST new fueling ERROR:", error);
